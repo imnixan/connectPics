@@ -11,6 +11,7 @@ public class Pic : LineElement
     {
         base.Awake();
         image = transform.GetChild(0).GetComponent<Image>();
+        rectangle = GetComponent<Image>();
     }
 
     public void SaveOldPos()

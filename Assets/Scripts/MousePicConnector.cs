@@ -9,7 +9,18 @@ public class MousePicConnector : MonoBehaviour
     [SerializeField]
     private List<LineElement> line = new List<LineElement>();
 
-    private AnimationManager animMan;
+    [SerializeField]
+    private GameObject circlePrefab;
+
+    [SerializeField]
+    private Transform circlesParent;
+
+    [SerializeField]
+    private Sprite normal,
+        choosed;
+
+    private List<GameObject> circles = new List<GameObject>();
+    private GameAnimManager animMan;
     private GameManager gm;
     private RaycastHit2D rayHit;
     private LineRenderer lr;
@@ -17,7 +28,7 @@ public class MousePicConnector : MonoBehaviour
 
     private void Start()
     {
-        animMan = GetComponentInParent<AnimationManager>();
+        animMan = GetComponentInParent<GameAnimManager>();
         gm = GetComponentInParent<GameManager>();
         camera = Camera.main;
         lr = GetComponent<LineRenderer>();
@@ -30,6 +41,7 @@ public class MousePicConnector : MonoBehaviour
             LineElement firstElement = GetClickElement();
             if (firstElement && firstElement is Pic)
             {
+                firstElement.rectangle.sprite = choosed;
                 mouseHold = true;
                 line.Add(firstElement);
             }
@@ -37,7 +49,7 @@ public class MousePicConnector : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0))
         {
-            line.Clear();
+            ClearLine();
             mouseHold = false;
             lr.positionCount = 0;
         }
@@ -68,13 +80,14 @@ public class MousePicConnector : MonoBehaviour
     private void CheckConnect(Pic pic)
     {
         mouseHold = false;
+        pic.rectangle.sprite = choosed;
         Sprite firstPic = line[0].image.sprite;
         Sprite lastPic = pic.image.sprite;
         if (firstPic == lastPic)
         {
             OnCorrectConnect();
         }
-        line.Clear();
+        ClearLine();
     }
 
     private void OnCorrectConnect()
@@ -117,7 +130,47 @@ public class MousePicConnector : MonoBehaviour
         for (int i = 0; i < line.Count; i++)
         {
             lr.SetPosition(i, line[i].Position);
+            CheckTurn(i);
         }
-        lr.SetPosition(lr.positionCount - 1, Camera.main.ScreenToWorldPoint(Input.mousePosition));
+        Vector2 onFingerPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        lr.SetPosition(lr.positionCount - 1, onFingerPoint);
+    }
+
+    private void CheckTurn(int pointIndex)
+    {
+        if (pointIndex >= 2)
+        {
+            Vector2 lastPoint = lr.GetPosition(pointIndex);
+            Vector2 potentialTurn = lr.GetPosition(pointIndex - 1);
+            Vector2 prevPoint = lr.GetPosition(pointIndex - 2);
+
+            if (
+                (lastPoint.x != potentialTurn.x && potentialTurn.x == prevPoint.x)
+                || (lastPoint.y != potentialTurn.y && potentialTurn.y == prevPoint.y)
+            )
+            {
+                circles.Add(
+                    Instantiate(circlePrefab, potentialTurn, new Quaternion(), circlesParent)
+                );
+            }
+        }
+    }
+
+    private void ClearLine()
+    {
+        foreach (LineElement pic in line)
+        {
+            if (pic is Pic)
+            {
+                pic.rectangle.sprite = normal;
+            }
+        }
+        line.Clear();
+        foreach (var circle in circles)
+        {
+            Destroy(circle);
+        }
+        lr.positionCount = 0;
+        circles.Clear();
     }
 }

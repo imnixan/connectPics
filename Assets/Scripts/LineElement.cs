@@ -5,7 +5,8 @@ using UnityEngine.UI;
 public class LineElement : MonoBehaviour
 {
     public RectTransform rt;
-    public Image image;
+    public Image rectangle,
+        image;
     public Vector2 AnchPosition
     {
         get { return rt.anchoredPosition; }
