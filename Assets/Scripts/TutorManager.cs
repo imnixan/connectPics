@@ -35,6 +35,7 @@ public class TutorManager : MonoBehaviour
     {
         tutorBtn.onClick.AddListener(Hide);
         tutorImage.sprite = incorrect;
+        tutorImage.SetNativeSize();
         tutorText.text = "You cannot connect cards through others";
         tutorBtn.image.sprite = play;
     }
