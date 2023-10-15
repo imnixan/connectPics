@@ -1019,8 +1019,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Vibro
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 08e34c621cfe3b649bd5eded31d86716, type: 2}
-  m_sharedMaterial: {fileID: -2832707393855737764, guid: 08e34c621cfe3b649bd5eded31d86716, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f4e8a0b6e1b268747b4bdff90110482e, type: 2}
+  m_sharedMaterial: {fileID: -610146878597421866, guid: f4e8a0b6e1b268747b4bdff90110482e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1222,8 +1222,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Sound
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 08e34c621cfe3b649bd5eded31d86716, type: 2}
-  m_sharedMaterial: {fileID: -2832707393855737764, guid: 08e34c621cfe3b649bd5eded31d86716, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f4e8a0b6e1b268747b4bdff90110482e, type: 2}
+  m_sharedMaterial: {fileID: -610146878597421866, guid: f4e8a0b6e1b268747b4bdff90110482e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
