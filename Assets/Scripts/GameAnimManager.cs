@@ -77,6 +77,7 @@ public class GameAnimManager : MonoBehaviour
                 timeWindow.pivot = gameField.pivot;
             })
             .Append(timeWindow.DOAnchorPos(new Vector2(0, 800), AnimTime))
+            .Join(gameField.DOAnchorPos(gameFieldHidePos, AnimTime))
             .Join(exitBtn.DOAnchorPosX(-110, AnimTime))
             .Append(replayRope.DOAnchorPos(replayRopeShow, AnimTime))
             .Append(replayBtn.DOAnchorPos(replayButtonShow, AnimTime))

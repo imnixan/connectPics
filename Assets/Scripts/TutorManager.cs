@@ -14,6 +14,7 @@ public class TutorManager : MonoBehaviour
     [SerializeField]
     private RectTransform tutorRT;
 
+    [SerializeField]
     private Image tutorImage;
 
     [SerializeField]
@@ -25,7 +26,7 @@ public class TutorManager : MonoBehaviour
     public void Show(GameManager gameManager)
     {
         this.gm = gameManager;
-        tutorImage = tutorRT.GetComponent<Image>();
+
         tutorRT.DOAnchorPosX(0, 0.5f).Play();
         tutorBtn.onClick.AddListener(ShowNextTutor);
     }

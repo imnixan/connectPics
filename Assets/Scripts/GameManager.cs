@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private TutorManager tutorManager;
 
+    [SerializeField]
+    private ProgressBar progressBar;
     private AudioSource sound;
 
     public void Start()
@@ -24,6 +26,7 @@ public class GameManager : MonoBehaviour
         gameAnim.Init();
         pics = GetComponent<PicsManager>();
         fieldSize = (int)pics.FillField();
+        progressBar.Init(fieldSize);
         if (fieldSize == 0)
         {
             Utils.CloseApp();
@@ -55,6 +58,7 @@ public class GameManager : MonoBehaviour
     public void CorrectConnect()
     {
         fieldSize--;
+        progressBar.UpBar();
         if (PlayerPrefs.GetInt("Vibro", 1) == 1)
         {
             Handheld.Vibrate();
