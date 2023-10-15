@@ -11,8 +11,14 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private AudioClip cardSound;
 
+    [SerializeField]
+    private TutorManager tutorManager;
+
+    private AudioSource sound;
+
     public void Start()
     {
+        sound = GetComponent<AudioSource>();
         timeManager = GetComponent<TimeManager>();
         gameAnim = GetComponent<GameAnimManager>();
         gameAnim.Init();
@@ -22,12 +28,27 @@ public class GameManager : MonoBehaviour
         {
             Utils.CloseApp();
         }
+        if (PlayerPrefs.GetInt("Sound", 1) == 1)
+        {
+            sound.Play();
+        }
+        if (!PlayerPrefs.HasKey("TimeRecord"))
+        {
+            tutorManager.Show(this);
+        }
+        else
+        {
+            StartCallback();
+        }
+    }
+
+    public void StartCallback()
+    {
         gameAnim.StartGame();
     }
 
     public void StartGame()
     {
-        timeManager = GetComponent<TimeManager>();
         timeManager.StartTime();
     }
 
@@ -41,7 +62,7 @@ public class GameManager : MonoBehaviour
 
         if (PlayerPrefs.GetInt("Sound", 1) == 1)
         {
-            AudioSource.PlayClipAtPoint(cardSound, Vector2.zero);
+            sound.PlayOneShot(cardSound);
         }
 
         if (fieldSize == 0)
@@ -55,7 +76,7 @@ public class GameManager : MonoBehaviour
         float levelTime = timeManager.GetFinishTime();
         if (levelTime < PlayerPrefs.GetFloat("TimeRecord", Mathf.Infinity))
         {
-            PlayerPrefs.GetFloat("TimeRecord", levelTime);
+            PlayerPrefs.SetFloat("TimeRecord", levelTime);
             PlayerPrefs.Save();
         }
         gameAnim.EndGame();

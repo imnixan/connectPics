@@ -6,53 +6,37 @@ using UnityEngine.SceneManagement;
 public class Settings : MonoBehaviour
 {
     [SerializeField]
-    private Image sliderSound,
-        slideVibro;
+    private Image soundSphere,
+        vibroSphere;
 
     [SerializeField]
-    private RectTransform vibroKnob,
-        soundKnob;
-
-    [SerializeField]
-    private float yOn,
-        yOff;
-
-    [SerializeField]
-    private Sprite onSlider,
-        offSlider;
+    private Sprite OnSpehere,
+        offSphere;
 
     private void Start()
     {
-        SetSliders();
+        SetSpheres();
     }
 
-    private void SetSliders()
+    private void SetSpheres()
     {
-        sliderSound.sprite = PlayerPrefs.GetInt("Sound", 1) == 1 ? onSlider : offSlider;
-        soundKnob.anchoredPosition = new Vector2(
-            soundKnob.anchoredPosition.x,
-            sliderSound.sprite == onSlider ? yOn : yOff
-        );
+        soundSphere.sprite = PlayerPrefs.GetInt("Sound", 1) == 1 ? OnSpehere : offSphere;
 
-        slideVibro.sprite = PlayerPrefs.GetInt("Vibro", 1) == 1 ? onSlider : offSlider;
-        vibroKnob.anchoredPosition = new Vector2(
-            vibroKnob.anchoredPosition.x,
-            slideVibro.sprite == onSlider ? yOn : yOff
-        );
+        vibroSphere.sprite = PlayerPrefs.GetInt("Vibro", 1) == 1 ? OnSpehere : offSphere;
     }
 
     public void ChangeSound()
     {
         PlayerPrefs.SetInt("Sound", PlayerPrefs.GetInt("Sound", 1) == 1 ? 0 : 1);
         PlayerPrefs.Save();
-        SetSliders();
+        SetSpheres();
     }
 
     public void ChangeVibro()
     {
         PlayerPrefs.SetInt("Vibro", PlayerPrefs.GetInt("Vibro", 1) == 1 ? 0 : 1);
         PlayerPrefs.Save();
-        SetSliders();
+        SetSpheres();
     }
 
     public void Menu()

@@ -12,15 +12,23 @@ public class GameAnimManager : MonoBehaviour
     [SerializeField]
     private RectTransform gameField,
         timeWindow,
-        tumb;
+        replayRope,
+        replayBtn,
+        menuRope,
+        menuBtn,
+        exitBtn;
 
     [SerializeField]
     private Vector2 gamefieldShowPos,
         gameFieldHidePos,
         timeWindowShow,
         timeWindowHide,
-        tumbShow,
-        tumbHide;
+        replayRopeShow,
+        replayRopeHide,
+        replayButtonShow,
+        replayButtonHide,
+        menuRopeShow,
+        menuRopeHide;
 
     private Sequence startScene,
         endScene,
@@ -41,9 +49,13 @@ public class GameAnimManager : MonoBehaviour
 
         endScene = DOTween
             .Sequence()
-            .Append(tumb.DOAnchorPos(tumbHide, AnimTime))
-            .Join(timeWindow.DOAnchorPos(timeWindowHide, AnimTime))
+            .Append(timeWindow.DOAnchorPos(timeWindowHide, AnimTime))
+            .Join(exitBtn.DOAnchorPosX(-110, AnimTime))
             .Join(gameField.DOAnchorPos(gameFieldHidePos, AnimTime))
+            .Append(replayBtn.DOAnchorPos(replayButtonHide, AnimTime))
+            .Join(replayRope.DOAnchorPos(replayRopeHide, AnimTime))
+            .Append(menuBtn.DOAnchorPos(replayButtonHide, AnimTime))
+            .Join(menuRope.DOAnchorPos(menuRopeHide, AnimTime))
             .AppendCallback(() =>
             {
                 if (string.IsNullOrEmpty(nextScene))
@@ -64,8 +76,12 @@ public class GameAnimManager : MonoBehaviour
                 timeWindow.anchorMin = gameField.anchorMin;
                 timeWindow.pivot = gameField.pivot;
             })
-            .Append(tumb.DOAnchorPos(tumbShow, AnimTime))
-            .Join(timeWindow.DOAnchorPos(new Vector2(0, 800), AnimTime));
+            .Append(timeWindow.DOAnchorPos(new Vector2(0, 800), AnimTime))
+            .Join(exitBtn.DOAnchorPosX(-110, AnimTime))
+            .Append(replayRope.DOAnchorPos(replayRopeShow, AnimTime))
+            .Append(replayBtn.DOAnchorPos(replayButtonShow, AnimTime))
+            .Append(menuRope.DOAnchorPos(menuRopeShow, AnimTime))
+            .Append(menuBtn.DOAnchorPos(replayButtonShow, AnimTime));
     }
 
     public void DelCorrectConnect(Pic pic, Vector3 pos)
